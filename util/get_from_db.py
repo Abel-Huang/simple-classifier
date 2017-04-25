@@ -12,21 +12,34 @@ config = {
 }
 
 
-def get_db():
+def get_summary_db(unitag):
     # 创建连接
     conn = pymysql.connect(**config)
     cur = conn.cursor()
     # 执行sql语句
     try:
         # 执行sql语句，进行查询
-        sql = 'SELECT * FROM result'
-        cur.execute(sql)
+        sql = 'SELECT * FROM summary where unitag=\"%s\"'
+        cur.execute(sql,unitag)
         # 获取查询结果
         result = cur.fetchall()
-        print(result)
-        print(type(result))
+        return result
     finally:
         cur.close()
         conn.close()
 
-get_db()
+def get_result_db(unitag):
+    # 创建连接
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    # 执行sql语句
+    try:
+        # 执行sql语句，进行查询
+        sql = 'SELECT * FROM result where unitag=\"%s\"'
+        cur.execute(sql,unitag)
+        # 获取查询结果
+        result = cur.fetchall()
+        return result
+    finally:
+        cur.close()
+        conn.close()
