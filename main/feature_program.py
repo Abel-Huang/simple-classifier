@@ -30,27 +30,27 @@ def  calcFeatVec(features, centers):
 # 初始化特征集
 def initFeatureSet():
     for name, count in ds.trainset_info.items():
-        dir = "../data/train_set/" + name + "/"
+        dir = '../data/train_set/' + name + '/'
         featureSet = np.float32([]).reshape(0, 128)
-        print("Extract features from training set" + name + "...")
+        print('Extract features from training set' + name + '...')
         for i in range(1, count + 1):
-            filename = dir + name + " (" + str(i) + ").jpg"
+            filename = dir + name + ' (' + str(i) + ').jpg'
             img = cv2.imread(filename)
             des = calSiftFeature(img)
             featureSet = np.append(featureSet, des, axis=0)
         featCnt = featureSet.shape[0]
-        print(str(featCnt) + " features in " + str(count) + " images\n")
+        print(str(featCnt) + ' features in ' + str(count) + ' images\n')
         # save featureSet to file
-        filename = "../data/temp/features/" + name + ".npy"
+        filename = '../data/temp/features/' + name + '.npy'
         np.save(filename, featureSet)
 
 
 def learnVocabulary():
     wordCnt = 50
     for name, count in ds.trainset_info.items():
-        filename = "../data/temp/features/" + name + ".npy"
+        filename = '../data/temp/features/' + name + '.npy'
         features = np.load(filename)
-        print("Learn vocabulary of " + name + "...")
+        print('Learn vocabulary of ' + name + '...')
         # use k-means to cluster a bag of features
         # —–cv2.TERM_CRITERIA_EPS:精确度（误差）满足epsilon停止。
         # —- cv2.TERM_CRITERIA_MAX_ITER：迭代次数超过max_iter停止。
@@ -63,9 +63,9 @@ def learnVocabulary():
         # 初始类中心选择，两种方法
         compactness, labels, centers = cv2.kmeans(features, wordCnt, None, criteria, 20, flags)
         # save vocabulary(a tuple of (labels, centers)) to file
-        filename = "../data/temp/vocabulary/" + name + ".npy"
+        filename = '../data/temp/vocabulary/' + name + '.npy'
         np.save(filename, (labels, centers))
-        print("Done\n")
+        print('Done\n')
 
 
 
