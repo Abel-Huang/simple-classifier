@@ -6,7 +6,7 @@ print(cv2.__version__)
 
 #计算sift特征
 
-def calSiftFeature(img):
+def cal_sift_feature(img):
     gray=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     sift=cv2.xfeatures2d.SIFT_create(200)
     kp, des = sift.detectAndCompute(gray, None)
@@ -14,39 +14,39 @@ def calSiftFeature(img):
 
 #计算特征向量
 
-def  calcFeatVec(features, centers):
-	featVec = np.zeros((1, 50))
+def  cal_feature_vec(features, centers):
+	feat_vec = np.zeros((1, 50))
 	for i in range(0, features.shape[0]):#获取矩阵的维数
 		fi = features[i]
-		diffMat = np.tile(fi, (50, 1)) - centers
-		sqSum = (diffMat**2).sum(axis=1)
-		dist = sqSum**0.5
-		sortedIndices = dist.argsort()#返回的是数组值从小到大的索引值
-		idx = sortedIndices[0] # index of the nearest center
-		featVec[0][idx] += 1
-	return featVec
+		diff_mat = np.tile(fi, (50, 1)) - centers
+		sq_sum = (diff_mat**2).sum(axis=1)
+		dist = sq_sum**0.5
+		sorted_indices = dist.argsort()#返回的是数组值从小到大的索引值
+		idx = sorted_indices[0] # index of the nearest center
+		feat_vec[0][idx] += 1
+	return feat_vec
 
 
 # 初始化特征集
-def initFeatureSet():
+def init_feature_set():
     for name, count in ds.trainset_info.items():
         dir = '../data/train_set/' + name + '/'
-        featureSet = np.float32([]).reshape(0, 128)
+        feature_set = np.float32([]).reshape(0, 128)
         print('Extract features from training set' + name + '...')
         for i in range(1, count + 1):
             filename = dir + name + ' (' + str(i) + ').jpg'
             img = cv2.imread(filename)
-            des = calSiftFeature(img)
-            featureSet = np.append(featureSet, des, axis=0)
-        featCnt = featureSet.shape[0]
-        print(str(featCnt) + ' features in ' + str(count) + ' images\n')
+            des = cal_sift_feature(img)
+            feature_set = np.append(feature_set, des, axis=0)
+        feat_cnt = feature_set.shape[0]
+        print(str(feat_cnt) + ' features in ' + str(count) + ' images\n')
         # save featureSet to file
         filename = '../data/temp/features/' + name + '.npy'
-        np.save(filename, featureSet)
+        np.save(filename, feature_set)
 
 
-def learnVocabulary():
-    wordCnt = 50
+def learn_vocabulary():
+    word_cnt = 50
     for name, count in ds.trainset_info.items():
         filename = '../data/temp/features/' + name + '.npy'
         features = np.load(filename)
@@ -61,7 +61,7 @@ def learnVocabulary():
         #分类数据, 分类个数, 预设的分类标签(没有的话 None),
         # 迭代停止的模式选择,重复试验kmeans算法次数，将会返回最好的一次结果
         # 初始类中心选择，两种方法
-        compactness, labels, centers = cv2.kmeans(features, wordCnt, None, criteria, 20, flags)
+        compactness, labels, centers = cv2.kmeans(features, word_cnt, None, criteria, 20, flags)
         # save vocabulary(a tuple of (labels, centers)) to file
         filename = '../data/temp/vocabulary/' + name + '.npy'
         np.save(filename, (labels, centers))
