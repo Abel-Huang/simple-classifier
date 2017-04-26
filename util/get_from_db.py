@@ -19,7 +19,7 @@ def get_summary_db(unitag):
     # 执行sql语句
     try:
         # 执行sql语句，进行查询
-        sql = 'SELECT * FROM summary where unitag=\"%s\"'
+        sql = 'SELECT * FROM summary where unitag= %s'
         cur.execute(sql,unitag)
         # 获取查询结果
         result = cur.fetchall()
@@ -35,7 +35,7 @@ def get_result_db(unitag):
     # 执行sql语句
     try:
         # 执行sql语句，进行查询
-        sql = 'SELECT * FROM result where unitag=\"%s\"'
+        sql = 'SELECT * FROM result where unitag= %s'
         cur.execute(sql,unitag)
         # 获取查询结果
         result = cur.fetchall()
