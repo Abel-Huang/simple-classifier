@@ -8,8 +8,7 @@ def visualization(unitag):
     data_result=gfd.get_summary_db(unitag)
     print(data_result)
     svc_list, rbf_list, poly_list, liner_list, name, llabel=pr.parse_ml_result(data_result)
-    print(llabel)
     ds.show_result_data(svc_list, svc_list, svc_list, svc_list, name, llabel)
 
-unitag=1493133167337
+unitag='1493535328866'
 visualization(unitag)
