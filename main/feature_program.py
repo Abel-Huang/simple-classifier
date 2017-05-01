@@ -8,8 +8,6 @@ print(cv2.__version__)
 def cal_feature_info(img, feature_type):
     gray=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     sift=fm.init_feature_obj(feature_type)
-    if sift==None:
-        return
     kp, des = sift.detectAndCompute(gray, None)
     return des
 
@@ -32,24 +30,28 @@ def init_feature_set(feature_type):
         dir = '../data/train_set/' + name + '/'
         # 设置feature_set的维度为0行128列 因为sift des返回的是128
         dimension=fm.init_feature_dimension(feature_type)
+        print('dimension: '+str(dimension))
         feature_set = np.float32([]).reshape(0, dimension)
-        print('Extract features from training set' + name + '...')
+        print('Extract features from training set ' + name + '...')
         for i in range(1, count + 1):
             filename = dir + name + ' (' + str(i) + ').jpg'
             img = cv2.imread(filename)
-            des = cal_feature_info(img)
+            des = cal_feature_info(img, feature_type)
+            print(str(1233)+str(des.shape)+str(10086))
+            print(feature_set.shape)
+            img.shape
             feature_set = np.append(feature_set, des, axis=0)
         feat_cnt = feature_set.shape[0]
         print(str(feat_cnt) + ' features in ' + str(count) + ' images\n')
         # save featureSet to file
-        filename = fm.generic_fea_filename(feature_type) + '/feature/'+name + '.npy'
+        filename = fm.generic_fea_filename(feature_type) + '/features/'+name + '.npy'
         np.save(filename, feature_set)
 
 # 利用k-means获取标签
 def learn_vocabulary(feature_type):
     word_cnt = 50
     for name, count in ds.trainset_info.items():
-        filename = fm.generic_fea_filename(feature_type) + '/feature/'+name + '.npy'
+        filename = fm.generic_fea_filename(feature_type) + '/features/'+name + '.npy'
         features = np.load(filename)
         print('Learn vocabulary of ' + name + '...')
         # use k-means to cluster a bag of features

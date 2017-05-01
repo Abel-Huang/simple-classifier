@@ -14,7 +14,7 @@ def train_classifier(feature_type):
     response = np.float32([])
     dict_idx = 0
     for name, count in ds.trainset_info.items():
-        dir = '../data/test_set/' + name + '/'
+        dir = '../data/train_set/' + name + '/'
         file_name=fm.generic_fea_filename(feature_type) + '/vocabulary/' + name + '.npy'
         labels, centers = np.load(file_name)
         print('Init training data of ' + name + '...')
@@ -71,7 +71,7 @@ def classify(feature_type, ml_method):
             #对每一张图片进行预测
             filename = dir + name + ' (' + str(i) + ').jpg'
             img = cv2.imread(filename)
-            features = fp.cal_feature_info(img)
+            features = fp.cal_feature_info(img, feature_type)
             feat_vec = fp.cal_feature_vec(features, centers)
             case = np.float32(feat_vec)
             if (dict_idx == svc.predict(case)):
