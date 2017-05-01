@@ -7,7 +7,7 @@ import numpy as np
 # 可视化
 #展示结果数据，柱状图，这个是以
 def show_result_data(list1, list2, list3, list4, name, llabel):
-    n_groups = 13
+    n_groups = 12
 
     fig, ax = plt.subplots()
     index = np.arange(n_groups)
