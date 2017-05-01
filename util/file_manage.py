@@ -28,7 +28,7 @@ def init_feature_obj(feature_type):
     elif feature_type=='orb':
         sift=cv2.ORB_create(200)
     elif feature_type=='brisk':
-        sift=cv2.BRISK_create(200)
+        sift=cv2.BRISK_create()
     return sift
 
 # 生成矩阵维数
