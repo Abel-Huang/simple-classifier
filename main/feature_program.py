@@ -36,10 +36,9 @@ def init_feature_set(feature_type):
         for i in range(1, count + 1):
             filename = dir + name + ' (' + str(i) + ').jpg'
             img = cv2.imread(filename)
+            if img==None:
+                print(filename)
             des = cal_feature_info(img, feature_type)
-            print(str(1233)+str(des.shape)+str(10086))
-            print(feature_set.shape)
-            img.shape
             feature_set = np.append(feature_set, des, axis=0)
         feat_cnt = feature_set.shape[0]
         print(str(feat_cnt) + ' features in ' + str(count) + ' images\n')
