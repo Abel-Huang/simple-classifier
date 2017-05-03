@@ -30,14 +30,12 @@ def init_feature_set(feature_type):
         dir = '../data/train_set/' + name + '/'
         # 设置feature_set的维度为0行128列 因为sift des返回的是128
         dimension=fm.init_feature_dimension(feature_type)
-        print('dimension: '+str(dimension))
         feature_set = np.float32([]).reshape(0, dimension)
         print('Extract features from training set ' + name + '...')
         for i in range(1, count + 1):
             filename = dir + name + ' (' + str(i) + ').jpg'
             img = cv2.imread(filename)
-            if img==None:
-                print(filename)
+            print(filename)
             des = cal_feature_info(img, feature_type)
             feature_set = np.append(feature_set, des, axis=0)
         feat_cnt = feature_set.shape[0]
