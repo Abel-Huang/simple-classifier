@@ -25,6 +25,6 @@ testset_info = {
 	'gold'		:	9,
 	'gun'		:	14,
 	'plane'		:	92,
-	'sky'		:	58,
+	'sky'		:	56,
 	'worldcup'	:	121
 }
