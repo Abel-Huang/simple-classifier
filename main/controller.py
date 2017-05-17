@@ -30,7 +30,7 @@ def visualization(unitag):
 
 
 if __name__ == '__main__':
-    classify_model()
-    # unitag = '1493535328866'
-    # visualization(unitag)
+
+    unitag = '1493535328866'
+    visualization(unitag)
 
