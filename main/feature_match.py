@@ -11,7 +11,7 @@ def feature_point_show(img_path, feature_type, flags=True):
     elif feature_type == 'surf':
         sift = cv2.xfeatures2d.SURF_create()
     elif feature_type=='orb':
-        sift = cv2.ORB_create()
+        sift = cv2.ORB_create(5000)
     elif feature_type == 'brisk':
         sift = cv2.BRISK_create()
     else:
@@ -88,6 +88,6 @@ def orb_match_plt(img_path, feature_type):
     plt.show()
 img='H:\data\image\lena.jpg'
 #
-# orb_match_plt(img, 'brisk')
-# # sift_match_plt(img, 'orb')
-feature_point_show(img, 'sift',False)
+orb_match_plt(img, 'orb')
+# sift_match_plt(img, 'surf')
+# feature_point_show(img, 'brisk',False)

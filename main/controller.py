@@ -30,7 +30,9 @@ def visualization(unitag):
 
 
 if __name__ == '__main__':
+    # feature_init()
+    # classify_model()
+    cp.classify('sift', 'lin')
 
-    unitag = '1493535328866'
-    visualization(unitag)
+
 

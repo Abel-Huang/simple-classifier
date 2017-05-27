@@ -13,14 +13,15 @@ def train_classifier(feature_type):
     train_data = np.float32([]).reshape(0, 50)
     response = np.float32([])
     dict_idx = 0
-    for name, count in ds.trainset_info.items():
-        dir = '../data/train_set/' + name + '/'
+    for name, count in ds.testset_info.items():
+        dir = '../data/test_set/' + name + '/'
         file_name=fm.generic_fea_filename(feature_type) + '/vocabulary/' + name + '.npy'
         labels, centers = np.load(file_name)
         print('Init training data of ' + name + '...')
         for i in range(1, count + 1):
             filename = dir + name + ' (' + str(i) + ').jpg'
             img = cv2.imread(filename)
+            print(filename)
             features = fp.cal_feature_info(img, feature_type)
             feat_vec = fp.cal_feature_vec(features, centers)
             train_data = np.append(train_data, feat_vec, axis=0)
