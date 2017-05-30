@@ -23,15 +23,34 @@ def show_result_data(list1, list2, list3, list4, name, llabel):
     plt.ylabel('Scores')
     plt.title('Scores by group and gender')
     plt.xticks(index + bar_width, name)
-    plt.ylim(0, 200)  # y轴的范围
+    plt.ylim(0, 100)  # y轴的范围
     plt.legend()
 
     plt.tight_layout()
     plt.show()
 
-#展示特征数据，散点图
-def show_feature_data():
-    pass
+#展示最终统计结果
+def show_summary_data(list_1, list_2, list_3, list_4, name, llabel):
+    n_groups = 4
+
+    fig, ax = plt.subplots()
+    index = np.arange(n_groups)
+    bar_width = 0.22  # 柱条宽度
+    opacity = 0.4
+    rects1 = plt.bar(index, list_1, bar_width, alpha=opacity, color='b',label=llabel[0])  # 第一个柱条，data1调用数据名字，label右上角图标名字
+    rects2 = plt.bar(index + bar_width, list_2, bar_width, alpha=opacity, color='r', label=llabel[1])
+    rects3 = plt.bar(index + 2 * bar_width, list_3, bar_width, alpha=opacity, color='g', label=llabel[2])
+    rects4 = plt.bar(index + 3 * bar_width, list_4, bar_width, alpha=opacity, color='y', label=llabel[3])
+
+    plt.xlabel('Group')
+    plt.ylabel('Classify Accuracy(%)')
+    plt.title('4 feature and 4 kernel histogram')
+    plt.xticks(index + bar_width, name)
+    plt.ylim(0, 100)  # y轴的范围
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
 
 #展示图片分类结果
 def show_result_image():

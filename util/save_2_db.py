@@ -9,6 +9,7 @@ def store_single(picname, classify, mlmethod, feamethod, correct, unitag): ###  
         cur.connection.commit()
         print('success')
     finally:                          ### close db
+
         cur.close()
         conn.close()
 

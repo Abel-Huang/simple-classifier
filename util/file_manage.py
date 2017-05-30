@@ -22,11 +22,11 @@ def generic_fea_filename(feature_type):
 # 根据参数生成， 关于设置生成点的个数问题
 def init_feature_obj(feature_type):
     if feature_type=='sift':
-        sift=cv2.xfeatures2d.SIFT_create(200)
+        sift=cv2.xfeatures2d.SIFT_create()
     elif feature_type=='surf':
-        sift=cv2.xfeatures2d.SURF_create(200)
+        sift=cv2.xfeatures2d.SURF_create()
     elif feature_type=='orb':
-        sift=cv2.ORB_create(200)
+        sift=cv2.ORB_create()
     elif feature_type=='brisk':
         sift=cv2.BRISK_create()
     return sift

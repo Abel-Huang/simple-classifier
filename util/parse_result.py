@@ -24,7 +24,7 @@ def parse_ml_result(result_list):
     poly_list=[]
     liner_list=[]
 
-    name = ('car', 'city', 'dog', 'earth', 'fireworks', 'flowers',
+    name = ('car', 'city', 'dog', 'fireworks', 'flowers',
             'fruits', 'glass', 'gold', 'gun', 'plane', 'sky', 'worldcup')
     llabel = ('svc', 'rbf_svc', 'poly_svc', 'lin_svc')
     # 这里的每一个元素都是一条数据
@@ -65,14 +65,14 @@ print(liner_list)
 
 # 这个函数用于解析采用不同特征提取的数据
 def parse_fea_result(result_list):
-    svc_list = []
-    rbf_list = []
-    poly_list = []
-    liner_list = []
+    sift_list = []
+    surf_list = []
+    orb_list = []
+    brisk_list = []
 
-    name = ('car', 'city', 'dog', 'earth', 'fireworks', 'flowers',
+    name = ('car', 'city', 'dog', 'fireworks', 'flowers',
             'fruits', 'glass', 'gold', 'gun', 'plane', 'sky', 'worldcup')
-    llabel = ('svc', 'rbf_svc', 'poly_svc', 'lin_svc')
+    llabel = ('sift', 'surf', 'orb', 'brisk')
     # 这里的每一个元素都是一条数据
     for r_dict in result_list:
         if r_dict['mlmethod'] == llabel[0]:
@@ -92,3 +92,55 @@ def parse_fea_result(result_list):
                 if item == r_dict['classify']:
                     liner_list.insert(name.index(item), r_dict['correct'])
     return svc_list, rbf_list, poly_list, liner_list, name, llabel
+
+# 用于解析summary表
+def parse_summary(summary_list):
+    sift_list=[]
+    surf_list=[]
+    orb_list=[]
+    brisk_list=[]
+
+    name = ('sift', 'surf', 'orb', 'brisk')
+    llabel = ('svc', 'rbf', 'poly', 'lin')
+    # 这里的每一个元素都是一条数据
+    for r_dict in summary_list:
+        if r_dict['mlmethod']==llabel[0] and r_dict['classify']=='total':
+            if r_dict['feamethod']==name[0]:
+                sift_list.insert(0,int(r_dict['correct']/586*100))
+            elif r_dict['feamethod']==name[1]:
+                surf_list.insert(0,int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[2]:
+                orb_list.insert(0, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod']==name[3]:
+                brisk_list.insert(0,int(r_dict['correct']/586*100))
+
+        elif r_dict['mlmethod']==llabel[1] and r_dict['classify']=='total':
+            if r_dict['feamethod']==name[0]:
+                sift_list.insert(1,int(r_dict['correct']/586*100))
+            elif r_dict['feamethod']==name[1]:
+                surf_list.insert(1,int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[2]:
+                orb_list.insert(1, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod']==name[3]:
+                brisk_list.insert(1,int(r_dict['correct']/586*100))
+
+        elif r_dict['mlmethod'] == llabel[2] and r_dict['classify']=='total':
+            if r_dict['feamethod'] == name[0]:
+                sift_list.insert(2, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[1]:
+                surf_list.insert(2, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[2]:
+                orb_list.insert(2, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[3]:
+                brisk_list.insert(2, int(r_dict['correct']/586*100))
+
+        elif r_dict['mlmethod'] == llabel[3] and r_dict['classify']=='total':
+            if r_dict['feamethod'] == name[0]:
+                sift_list.insert(3, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[1]:
+                surf_list.insert(3, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[2]:
+                orb_list.insert(3, int(r_dict['correct']/586*100))
+            elif r_dict['feamethod'] == name[3]:
+                brisk_list.insert(3, int(r_dict['correct']/586*100))
+    return sift_list, surf_list, orb_list, brisk_list, name, llabel

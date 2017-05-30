@@ -5,7 +5,6 @@ from sklearn.externals import joblib
 from main import data_set as ds
 from main import feature_program as fp
 from util import save_2_db as db
-from util import create_unique as cu
 from util import file_manage as fm
 
 # 训练分类器
@@ -13,8 +12,8 @@ def train_classifier(feature_type):
     train_data = np.float32([]).reshape(0, 50)
     response = np.float32([])
     dict_idx = 0
-    for name, count in ds.testset_info.items():
-        dir = '../data/test_set/' + name + '/'
+    for name, count in ds.trainset_info.items():
+        dir = '../data/train_set/' + name + '/'
         file_name=fm.generic_fea_filename(feature_type) + '/vocabulary/' + name + '.npy'
         labels, centers = np.load(file_name)
         print('Init training data of ' + name + '...')
@@ -54,8 +53,7 @@ def train_classifier(feature_type):
     joblib.dump(lin_svc, fm.generic_ml_filename(feature_type, 'lin'))
 
 # 调用分类器进行分类
-def classify(feature_type, ml_method):
-    unitag=cu.create_unique()
+def classify(feature_type, ml_method, unitag):
     #sklearn中的SVM
     # 载入分类器
     svc = joblib.load(fm.generic_ml_filename(feature_type, ml_method))
