@@ -43,23 +43,42 @@ def classify_result():
     cp.classify('orb', 'lin', unitag)
     cp.classify('brisk', 'lin', unitag)
 #  生成可视化图形
-def visualization(unitag):
+def visualization_summary(unitag):
     # 查询数据库中的某次实验的总体数据
     data_result=gfd.get_summary_db(unitag)
     sift_list, surf_list, orb_list, brisk_list, name, llabel=pr.parse_summary(data_result)
+    ds.show_summary_data(sift_list, surf_list, orb_list, brisk_list, llabel, name)
+
+def visualization_feature(unitag):
+    # 查询数据库中的某次实验的特征数据
+    data_result=gfd.get_summary_db(unitag)
+    sift_list, surf_list, orb_list, brisk_list, name, llabel=pr.parse_fea_result(data_result)
+    ds.show_result_data(sift_list, surf_list, orb_list, brisk_list, llabel, name)
     print(sift_list)
     print(surf_list)
     print(orb_list)
     print(brisk_list)
     print(name)
     print(llabel)
-    ds.show_summary_data(sift_list, surf_list, orb_list, brisk_list, llabel, name)
 
+def visualization_kernal(unitag):
+    # 查询数据库中的某次实验的核函数数据
+    data_result=gfd.get_summary_db(unitag)
+    sift_list, surf_list, orb_list, brisk_list, name, llabel=pr.parse_ml_result(data_result)
+    ds.show_result_data(sift_list, surf_list, orb_list, brisk_list, llabel, name)
+    print(sift_list)
+    print(surf_list)
+    print(orb_list)
+    print(brisk_list)
+    print(name)
+    print(llabel)
 
 if __name__ == '__main__':
     # feature_init()
     # classify_model()
     # classify_result()
-    visualization(1496035754193)
+    visualization_summary(1496035754193)
+    #visualization_kernal(1496035754193)
+    # visualization_feature(1496035754193)
 
 
